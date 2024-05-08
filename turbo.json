@@ -1,14 +1,14 @@
 {
    "$schema": "https://turborepo.org/schema.json",
    "pipeline": {
-      "dev": { "persistent": true, "cache": false },
+      "dev": { "persistent": true, "cache": false, "dependsOn": ["^db:generate"] },
       "lint": { "outputs": [] },
       "lint:fix": { "outputs": [] },
       "ts:check": { "outputs": [] },
       "stylelint": { "outputs": [] },
       "check": { "outputs": [] },
       "build": {
-         "dependsOn": ["^build:lib"],
+         "dependsOn": ["^build:lib", "^db:generate"],
          "outputs": ["dist/**"]
       },
       "build:lib": { "outputs": ["dist/**"] },
@@ -16,6 +16,12 @@
       "test:integration:run": { "outputs": [] },
       "test:e2e:run": { "outputs": [] },
       "test:coverage": { "outputs": ["coverage/**"] },
-      "test:coverage:preview": { "outputs": [] }
+      "test:coverage:preview": { "outputs": [] },
+      "db:generate": {
+         "cache": false
+      },
+      "db:push": {
+         "cache": false
+      }
    }
 }
